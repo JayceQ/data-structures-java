@@ -105,8 +105,8 @@ public class Array<E> {
         return remove(0);
     }
 
-    public E remoceLast() {
-        return remove(size);
+    public E removeLast() {
+        return remove(size - 1);
     }
 
     public boolean removeElement(E e) {
