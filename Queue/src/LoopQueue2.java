@@ -50,6 +50,9 @@ public class LoopQueue2<E> implements Queue<E> {
         return data[front];
     }
 
+    /**
+     * if tail < front , means queue is in loop.
+     */
     @Override
     public int getSize() {
         return tail >= front ? tail - front : tail - front + data.length;

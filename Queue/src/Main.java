@@ -15,14 +15,16 @@ public class Main {
 
         long end = System.nanoTime();
 
-        return (end - start) / 1000000;
+        return (end - start) / 1000000.0;
     }
 
     public static void main(String[] args) {
         int opCount = 100000;
         ArrayQueue<Integer> arrayQueue = new ArrayQueue<>();
-        System.out.println("ArrayQueue: " + testQueue(arrayQueue, opCount) + " ms");
+        System.out.println("ArrayQueue O(n^2): " + testQueue(arrayQueue, opCount) + " ms");
         LoopQueue<Integer> loopQueue = new LoopQueue<>();
         System.out.println("LoopQueue: " + testQueue(loopQueue, opCount) + " ms");
+        LinkedListQueue<Integer> linkedListQueue = new LinkedListQueue<>();
+        System.out.println("LinkedListQueue: " + testQueue(linkedListQueue, opCount) + " ms");
     }
 }
