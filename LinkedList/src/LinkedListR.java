@@ -1,4 +1,11 @@
-public class LinkedList<E> {
+import javafx.util.Pair;
+
+/**
+ * 用递归实现链表数据的增删改查
+ *
+ * @param <E>
+ */
+public class LinkedListR<E> {
 
     private class Node {
         public E e;
@@ -23,12 +30,11 @@ public class LinkedList<E> {
         }
     }
 
-    //虚拟头节点
-    private Node dummyHead;
+    private Node head;
     private int size;
 
-    public LinkedList() {
-        dummyHead = new Node();
+    public LinkedListR() {
+        head = null;
         size = 0;
     }
 
@@ -40,26 +46,21 @@ public class LinkedList<E> {
         return size == 0;
     }
 
-//    public void addFirst(E e) {
-//        Node node = new Node(e);
-//        node.next = head;
-//        head = node;
-//        head = new Node(e, head);
-//        size++;
-//    }
-
     public void add(int index, E e) {
         if (index < 0 || index > size) {
             throw new IllegalArgumentException("Add failed, Illegal index.");
         }
-
-        Node prev = dummyHead;
-        for (int i = 0; i < index; i++) {
-            prev = prev.next;
-        }
-        prev.next = new Node(e, prev.next);
+        head = add(head, index, e);
         size++;
+    }
 
+    private Node add(Node node, int index, E e) {
+
+        if (index == 0) {
+            return new Node(e, node);
+        }
+        node.next = add(node.next, --index, e);
+        return node;
     }
 
     // O(1)
@@ -76,11 +77,14 @@ public class LinkedList<E> {
             throw new IllegalArgumentException("Get failed. Illegal index.");
         }
 
-        Node cur = dummyHead.next;
-        for (int i = 0; i < index; i++) {
-            cur = cur.next;
-        }
+        Node cur = get(head, index);
         return cur.e;
+    }
+
+    private Node get(Node node, int index) {
+        if (index == 0)
+            return node;
+        return get(node.next, --index);
     }
 
     public E getFirst() {
@@ -95,15 +99,19 @@ public class LinkedList<E> {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Set failed. Illegal index.");
         }
-        Node cur = dummyHead.next;
-        for (int i = 0; i < index; i++) {
-            cur = cur.next;
+        set(head, index, e);
+    }
+
+    private void set(Node node, int index, E e) {
+        if (index == 0) {
+            node.e = e;
+            return;
         }
-        cur.e = e;
+        set(node.next, --index, e);
     }
 
     public boolean contains(E e) {
-        Node cur = dummyHead.next;
+        Node cur = head;
         while (cur != null) {
             if (cur.e.equals(e)) {
                 return true;
@@ -117,15 +125,18 @@ public class LinkedList<E> {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Remove failed. Illegal index.");
         }
-        Node prev = dummyHead;
-        for (int i = 0; i < index; i++) {
-            prev = prev.next;
-        }
-        Node retNode = prev.next;
-        prev.next = retNode.next;
-        retNode.next = null;
+        Pair<Node, E> ret = remove(head, index);
         size--;
-        return retNode.e;
+        head = ret.getKey();
+        return ret.getValue();
+    }
+
+    private Pair<Node, E> remove(Node node, int index) {
+        if (index == 0)
+            return new Pair<>(node.next, node.e);
+        Pair<Node, E> res = remove(node.next, --index);
+        node.next = res.getKey();
+        return new Pair<>(node, res.getValue());
     }
 
     public E removeFirst() {
@@ -140,7 +151,7 @@ public class LinkedList<E> {
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
-        Node cur = dummyHead.next;
+        Node cur = head;
         while (cur != null) {
             res.append(cur).append("->");
             cur = cur.next;
@@ -150,7 +161,7 @@ public class LinkedList<E> {
     }
 
     public static void main(String[] args) {
-        LinkedList<Integer> linkedList = new LinkedList<>();
+        LinkedListR<Integer> linkedList = new LinkedListR<>();
         for (int i = 0; i < 5; i++) {
             linkedList.addFirst(i);
         }
