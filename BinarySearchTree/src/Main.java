@@ -6,15 +6,17 @@ public class Main {
         for (int num : nums) {
             bst.add(num);
         }
-        bst.preOrder();
-        System.out.println();
-        bst.preOrderNR();
-        System.out.println();
-        bst.inOrder();
-        System.out.println();
-        bst.postOrder();
-        System.out.println();
-        bst.postOrderRN();
+//        bst.preOrder();
+//        System.out.println();
+//        bst.preOrderNR();
+//        System.out.println();
+//        bst.inOrder();
+//        System.out.println();
+//        bst.postOrder();
+//        System.out.println();
+//        bst.postOrderRN();
+//        System.out.println();
+        bst.levelOrder();
 
         //System.out.println(bst);
     }
