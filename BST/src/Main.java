@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Random;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -16,8 +19,20 @@ public class Main {
 //        System.out.println();
 //        bst.postOrderRN();
 //        System.out.println();
+        bst.reomve(5);
         bst.levelOrder();
 
+        BST<Integer> tree = new BST<>();
+        Random random = new Random();
+        int n = 10;
+        for (int i = 0; i < n; i++) {
+            tree.add(random.nextInt(100));
+        }
+        ArrayList<Integer> list = new ArrayList<>();
+        while (!tree.isEmpty()) {
+            list.add(tree.removeMin());
+        }
+        System.out.println(list);
         //System.out.println(bst);
     }
 }

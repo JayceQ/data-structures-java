@@ -178,6 +178,114 @@ public class BST<E extends Comparable<E>> {
         }
     }
 
+    public E minimum() {
+        if (size == 0) {
+            throw new IllegalArgumentException("BST is empty");
+        }
+        return minimum(root).e;
+    }
+
+    private Node minimum(Node node) {
+        if (node.left == null) {
+            return node;
+        }
+        return minimum(node.left);
+    }
+
+    public E maximum() {
+        if (size == 0) {
+            throw new IllegalArgumentException("BST is empty");
+        }
+        return maximum(root).e;
+    }
+
+    private Node maximum(Node node) {
+        if (node.right == null) {
+            return node;
+        }
+        return maximum(node.right);
+    }
+
+
+    public E removeMin() {
+        E ret = minimum();
+        root = removeMin(root);
+        return ret;
+    }
+
+    //删除掉node为根的二分搜索树中的最小节2点
+    //返回删除节点后新的二分搜索树的根
+    private Node removeMin(Node node) {
+        if (node.left == null) {
+            Node rn = node.right;
+            node.right = null;
+            size--;
+            return rn;
+        }
+        node.left = removeMin(node.left);
+        return node;
+    }
+
+    public E removeMax() {
+        E ret = maximum();
+        root = removeMax(root);
+        return ret;
+    }
+
+    //删除掉node为根的二分搜索树中的最大节点
+    //返回删除节点后新的二分搜索树的根
+    private Node removeMax(Node node) {
+        if (node.right == null) {
+            Node ln = node.left;
+            node.left = null;
+            size--;
+            return ln;
+        }
+        node.right = removeMax(node.left);
+        return node;
+    }
+
+    public void reomve(E e) {
+        root = remove(root, e);
+    }
+
+    //删除以node为根的二分搜索树中值为e的节点，递归算法
+    //返回删除节点新的二分搜索树的根
+    private Node remove(Node node, E e) {
+        if (node == null) {
+            return null;
+        }
+        if (e.compareTo(node.e) < 0) {
+            node.left = remove(node.left, e);
+            return node;
+        }
+        if (e.compareTo(node.e) > 0) {
+            node.right = remove(node.right, e);
+            return node;
+        } else {//e == node.e
+            if (node.left == null) {
+                Node rn = node.right;
+                node.right = null;
+                size--;
+                return rn;
+            }
+            if (node.right == null) {
+                Node ln = node.left;
+                node.left = null;
+                size--;
+                return ln;
+            }
+            //待删除绩点左右子树均不为空，
+            //找到比待删除节点大的最小节点，即待删除节点右子树的最小节点
+            //用这个节点顶替待删除节点的位置
+            Node successor = minimum(node.right);
+            successor.right = removeMin(node.right);
+            successor.left = node.left;
+            node.left = node.right = null;
+            return successor;
+        }
+    }
+
     public String toString() {
         StringBuilder res = new StringBuilder();
         generateBSTString(root, 0, res);
