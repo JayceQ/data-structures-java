@@ -1,22 +1,24 @@
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class Main {
 
     public static void main(String[] args) {
+        System.out.println("BSTSet: " + testSet(new BSTSet<>()) + "ms");
+        System.out.println("LinkedListSet: " + testSet(new LinkedListSet<>()) + "ms");
+    }
+
+    private static double testSet(Set<String> set) {
         ArrayList<String> words = new ArrayList<>();
-        boolean b = FileUtil.readFile("Set/src/test.txt", words);
-        System.out.println("Total words: " + words.size());
-
-
-        BSTSet<String> set = new BSTSet<>();
+        FileUtil.readFile("Set/src/test.txt", words);
+        System.out.println(set.getClass().getName() + ": Total words: " + words.size());
+        long start = System.nanoTime();
         for (String word : words) {
             set.add(word);
         }
-        LinkedListSet<String> set2 = new LinkedListSet<>();
-        for (String word : words) {
-            set2.add(word);
-        }
-        System.out.println("Total different words: " + set.size());
-        System.out.println("Total different words: " + set2.size());
+        System.out.println(set.getClass().getName() + ": Total different words: " + set.size());
+        return (System.nanoTime() - start) / 1000000.0;
     }
+
+
 }
