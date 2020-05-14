@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Array<E> {
 
     private E[] data;
@@ -11,6 +13,15 @@ public class Array<E> {
 
     public Array() {
         this(10);
+    }
+
+    public Array(E[] arr) {
+        data = (E[]) new Object[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            data[i] = arr[i];
+        }
+        //System.arraycopy(data, 0, arr, 0, arr.length);
+        size = arr.length;
     }
 
     public int getSize() {
