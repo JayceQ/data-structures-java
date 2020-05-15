@@ -1,10 +1,8 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.TreeMap;
 
 /**
- * LeetCode No.2
+ * LeetCode No.350
  */
 public class Solution2 {
 
