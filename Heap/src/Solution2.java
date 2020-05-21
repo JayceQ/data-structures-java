@@ -16,10 +16,14 @@ public class Solution2 {
                 map.put(num, 1);
         }
 
+//        PriorityQueue<Integer> pq = new PriorityQueue<>(
+//                (a, b) -> map.get(a) - map.get(b)
+//        );
         PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.comparingInt(map::get));
         for (int key : map.keySet()) {
             if (pq.size() < k)
                 pq.add(key);
+            //key就是元素，map.get就是频次
             else if (map.get(key) > map.get(pq.peek())) {
                 pq.remove();
                 pq.add(key);
