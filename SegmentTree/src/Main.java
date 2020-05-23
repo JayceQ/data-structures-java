@@ -6,6 +6,9 @@ public class Main {
 
         //SegmentTree<Integer> segTree = new SegmentTree<>(nums, (a,b) -> a+b);
         SegmentTree<Integer> segTree = new SegmentTree<>(nums, Integer::sum);
-        System.out.println(segTree);
+        //System.out.println(segTree);
+        System.out.println(segTree.query(0,2));
+        System.out.println(segTree.query(2,5));
+        System.out.println(segTree.query(0,5));
     }
 }

@@ -1,3 +1,3 @@
 public interface Merger<E> {
-    E merger(E a, E b);
+    E merge(E a, E b);
 }
