@@ -19,7 +19,7 @@ public class Main {
 //        System.out.println();
 //        bst.postOrderRN();
 //        System.out.println();
-        bst.reomve(5);
+        bst.remove(5);
         bst.levelOrder();
 
         BST<Integer> tree = new BST<>();

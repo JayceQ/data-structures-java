@@ -245,7 +245,7 @@ public class BST<E extends Comparable<E>> {
         return node;
     }
 
-    public void reomve(E e) {
+    public void remove(E e) {
         root = remove(root, e);
     }
 
