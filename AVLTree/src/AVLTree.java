@@ -56,6 +56,7 @@ public class AVLTree<K extends Comparable<K>, V> {
             node.value = value;
 
         //更新height
+        //TODO 优化：如果重新计算后的高度和这个节点之前的高度相等，后续对这个节点以及祖先节点则不需要维护平衡
         node.height = 1 + Math.max(getHeight(node.left), getHeight(node.right));
 
         //计算平衡因子
