@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Main {
 
@@ -7,6 +6,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("BSTMap: " + testSet(new BSTMap<>()) + "ms");
         System.out.println("LinkedListMap: " + testSet(new LinkedListMap<>()) + "ms");
+        System.out.println("AVLMap: " + testSet(new AVLMap<>()) + "ms");
     }
 
     private static double testSet(Map<String, Integer> map) {
