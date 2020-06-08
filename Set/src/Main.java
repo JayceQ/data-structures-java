@@ -1,4 +1,3 @@
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class Main {
@@ -6,6 +5,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("BSTSet: " + testSet(new BSTSet<>()) + "ms");
         System.out.println("LinkedListSet: " + testSet(new LinkedListSet<>()) + "ms");
+        System.out.println("AVLSet: " + testSet(new AVLSet<>()) + "ms");
     }
 
     private static double testSet(Set<String> set) {
