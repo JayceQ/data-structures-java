@@ -26,6 +26,13 @@ public class RBTree<K extends Comparable<K>, V> {
         size = 0;
     }
 
+    // 判断节点node的颜色
+    private boolean isRed(Node node) {
+        if (node == null)
+            return BLACK;
+        return node.color;
+    }
+
     //像红黑树中添加新的元素
     public void add(K key, V value) {
         root = add(root, key, value);
@@ -76,6 +83,7 @@ public class RBTree<K extends Comparable<K>, V> {
     private Node add(Node node, K key, V value) {
         if (node == null) {
             size++;
+            //默认插入红色节点
             return new Node(key, value);
         }
         if (key.compareTo(node.key) < 0) {
@@ -86,6 +94,13 @@ public class RBTree<K extends Comparable<K>, V> {
             //key.compareTo(node.key == 0 如果是重复元素,替换掉
             node.value = value;
         }
+
+        if (isRed(node.right) && !isRed(node.left))
+            node = leftRotate(node);
+        if (isRed(node.left) && isRed(node.left.left))
+            node = rightRotate(node);
+        if (isRed(node.left) && isRed(node.right))
+            flipColors(node);
         return node;
     }
 
@@ -103,70 +118,7 @@ public class RBTree<K extends Comparable<K>, V> {
         }
     }
 
-    public V remove(K key) {
-        Node node = getNode(root, key);
-        if (node != null) {
-            root = remove(root, key);
-        }
-        return null;
-    }
 
-    //删除以node为根的二分搜索树中键盘为key的节点，递归算法
-    //返回删除节点新的二分搜索树的根
-    private Node remove(Node node, K key) {
-        if (node == null) {
-            return null;
-        }
-        if (key.compareTo(node.key) < 0) {
-            node.left = remove(node.left, key);
-            return node;
-        }
-        if (key.compareTo(node.key) > 0) {
-            node.right = remove(node.right, key);
-            return node;
-        } else {//key == node.key
-            if (node.left == null) {
-                Node rn = node.right;
-                node.right = null;
-                size--;
-                return rn;
-            }
-            if (node.right == null) {
-                Node ln = node.left;
-                node.left = null;
-                size--;
-                return ln;
-            }
-            //待删除绩点左右子树均不为空，
-            //找到比待删除节点大的最小节点，即待删除节点右子树的最小节点
-            //用这个节点顶替待删除节点的位置
-            Node successor = minimum(node.right);
-            successor.right = removeMin(node.right);
-            successor.left = node.left;
-            node.left = node.right = null;
-            return successor;
-        }
-    }
-
-    private Node minimum(Node node) {
-        if (node.left == null) {
-            return node;
-        }
-        return minimum(node.left);
-    }
-
-    //删除掉node为根的二分搜索树中的最小节点
-    //返回删除节点后新的二分搜索树的根
-    private Node removeMin(Node node) {
-        if (node.left == null) {
-            Node rn = node.right;
-            node.right = null;
-            size--;
-            return rn;
-        }
-        node.left = removeMin(node.left);
-        return node;
-    }
 
 
     public boolean contains(K key) {
